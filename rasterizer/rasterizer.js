@@ -242,7 +242,9 @@ function Vertex(options, attributes) {
     r: options.radius,
   }, attributes));
 
-  function handleMove(point) {
+  function handleMove(evt, point) {
+    evt.preventDefault();
+    evt.stopPropagation();
     const newX = point.x - mouseGrabOffset.x;
     const newY = point.y - mouseGrabOffset.y;
     vertex.setAttribute('cx', newX);
@@ -250,8 +252,8 @@ function Vertex(options, attributes) {
     emitCustomEvent(vertex, 'shape.move');
   }
 
-  const handleMouseMove = evt => handleMove(mouseEventPoint(evt));
-  const handleTouchMove = evt => handleMove(touchEventPoint(evt));
+  const handleMouseMove = evt => handleMove(evt, mouseEventPoint(evt));
+  const handleTouchMove = evt => handleMove(evt, touchEventPoint(evt));
 
   function handleStart(point) {
     mouseGrabOffset.x = point.x - (parseInt(vertex.getAttribute('cx')) || 0);
