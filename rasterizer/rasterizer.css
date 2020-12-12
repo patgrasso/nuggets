@@ -30,4 +30,5 @@ html, body, #app {
   font-size: large;
   border: 1px solid white;
   border-radius: 3px;
+  user-select: none;
 }
