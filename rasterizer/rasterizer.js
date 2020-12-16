@@ -78,6 +78,12 @@ function Rasterizer(anchor, options) {
   anchor.appendChild(canvas.el);
   anchor.appendChild(controlPanel.el);
 
+  // Firefox doesn't emit the "load" event on <svg> elements once they're
+  // appended to the body like Chrome and IE do. To get around this, just
+  // execute the "on load" behavior here after we've appended them to the DOM.
+  canvas.redrawTiles();
+  redraw();
+
   return Object.freeze({
     canvas,
     polygon,
@@ -488,6 +494,7 @@ function Canvas(options, attributes) {
   return {
     add,
     remove,
+    redrawTiles,
     el: svg,
     addEventListener: svg.addEventListener.bind(svg),
     setActiveTiles: setActiveTilesDict,
